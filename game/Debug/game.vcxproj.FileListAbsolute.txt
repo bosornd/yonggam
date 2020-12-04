@@ -1,0 +1,2 @@
+C:\Users\jingyeong\Desktop\2020-2\객체지향프로그래밍\yonggammovemove\game\Debug\game.exe
+C:\Users\jingyeong\Desktop\2020-2\객체지향프로그래밍\yonggammovemove\game\Debug\game.pdb
