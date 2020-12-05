@@ -287,30 +287,41 @@ int main()
 
 
 // 인트로
+	//scenechange Timer
+	auto sceneTimer = Timer::create(1.5f);
+	auto sceneTimer2 = Timer::create(1.5f);
+	auto sceneTimer3 = Timer::create(1.5f);
+	
 
 	//인트로 
 	auto intro = Scene::create(" INTRO ", "images/intro2.png");
 	auto introMusic = Sound::create("images/introMusic.mp3");
 	introMusic->play();
-	auto nextToStage1 = Object::create("images/next.png", intro, 1060, 230);
+	auto nextToStage1 = Object::create("images/next.png", intro, 990, 10);
+	nextToStage1->setScale(0.8f);
 	
 	//stage1
 	auto stage1 = Scene::create("stage1", "images/stage1.png");
 	auto stage1story = Scene::create("stage1", "images/stage1story.png");
-	auto nextToStage2 = Object::create("images/next.png", stage1story, 1060, 350);
+	auto nextToStage2 = Object::create("images/next.png", stage1story, 1120, 10);
+	nextToStage2->setScale(0.8f);
 
 	//stage2
 	auto stage2 = Scene::create("stage2", "images/stage2.png");
 	auto stage2story = Scene::create("stage2", "images/stage2story.png");
-	auto nextToGame2 = Object::create("images/next.png", stage2story, 1060, 350);
+	auto nextToGame2 = Object::create("images/next.png", stage2story, 1120, 10);
 	auto Game2End = Scene::create("stage2", "images/stage2story.png");
-
+	nextToGame2->setScale(0.8f);
+	
 
 	// stage3 
-	auto stage3 = Scene::create("stage3", "images/stage3story.png");
+	auto stage3 = Scene::create("stage3", "images/stage3.png");
 	auto stage3story = Scene::create("stage3", "images/stage3story.png");
-	auto nextToGame3 = Object::create("images/next.png", stage3story, 1060, 350);
+	auto nextToGame3 = Object::create("images/next.png", stage3story, 1120, 10);
 	auto Game3End = Scene::create("stage2", "images/stage2story.png");
+	nextToGame3->setScale(0.8f);
+
+	
 
 
 
@@ -433,26 +444,45 @@ int main()
 
 //인트로 제어함수
 
-	nextToStage1->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+	//--------------------------scenechange timercallback-----------------------
+	sceneTimer2->setOnTimerCallback([&](TimerPtr sceneT)->bool {
+		cout << "here" << endl;
+		stage2story->enter();
+		return true;
+		});
+	sceneTimer->setOnTimerCallback([&](TimerPtr sceneT)->bool {
+		cout << "here" << endl;
 		stage1story->enter();
+		return true;
+		});
+	sceneTimer3->setOnTimerCallback([&](TimerPtr sceneT)->bool {
+		cout << "here" << endl;
+		stage3story->enter();
+		return true;
+		});
+	// -------------------------------- scenechange mousecallback ---------------------
+	nextToStage1->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+		stage1->enter();
+		sceneTimer->start();
 		return true;
 		});
 
 	nextToStage2->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
-		stage2story->enter();
+		stage2->enter();
+		sceneTimer2->start();
 		return true;
 	});
 
 	nextToGame2->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		game2intro->enter();
 		showTimer(basetimer);
+		introMusic->stop();
 		badbgm->play(true);
 		return true;
 	});
 
 	nextToGame3->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		game3intro->enter();
-
 		return true;
 	});
 
@@ -501,6 +531,7 @@ int main()
 		});
 
 	basetimer->setOnTimerCallback([&](TimerPtr baseT)->bool {
+		bigmac->stop();
 		showMessage("YOU LOSE");
 		//endGame();
 		return true;
@@ -515,6 +546,7 @@ int main()
 				ingredient2case(q_index, key_flag, question, ingredient, filename, game2scene, answerX, answerY);
 			}
 			else if (question[q_index] != key_press[key_index] && question[q_index] != 0) {
+				bigmac->stop();
 				showMessage("YOU LOSE");
 				//endGame();
 			}
@@ -528,7 +560,9 @@ int main()
 					basetimer->stop();
 					bigmac->stop();
 					hideTimer();
-					stage3story->enter();
+					introMusic->play(true);
+					stage3->enter();
+					sceneTimer3->start();
 				}
 				timer->start();
 			}
