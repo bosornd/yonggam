@@ -848,7 +848,7 @@ int main()
 			else if (question[q_index] == 0 && key_flag == 1) {
 				game2BaseTimer->set(5.0f);
 				combosound->play(true);
-				game2BaseTimer->stop();
+				//game2BaseTimer->stop();
 				makeTimer(bread1, clear, combo, comboNum, cnt, q_index, answerX, answerY, breadTimer, clearTimer, comboTimer, game2scene);
 				clearArray(key_press, ingredient, q_ingredient, q_index, key_index, key_flag);
 				if (cnt > 10) {
