@@ -287,20 +287,30 @@ int main()
 
 
 // 인트로
+
+	//인트로 
 	auto intro = Scene::create(" INTRO ", "images/intro2.png");
+	auto introMusic = Sound::create("images/introMusic.mp3");
+	introMusic->play();
 	auto nextToStage1 = Object::create("images/next.png", intro, 1060, 230);
 	
-
+	//stage1
+	auto stage1 = Scene::create("stage1", "images/stage1.png");
 	auto stage1story = Scene::create("stage1", "images/stage1story.png");
 	auto nextToStage2 = Object::create("images/next.png", stage1story, 1060, 350);
 
-
+	//stage2
+	auto stage2 = Scene::create("stage2", "images/stage2.png");
 	auto stage2story = Scene::create("stage2", "images/stage2story.png");
 	auto nextToGame2 = Object::create("images/next.png", stage2story, 1060, 350);
+	auto Game2End = Scene::create("stage2", "images/stage2story.png");
 
 
+	// stage3 
+	auto stage3 = Scene::create("stage3", "images/stage3story.png");
 	auto stage3story = Scene::create("stage3", "images/stage3story.png");
 	auto nextToGame3 = Object::create("images/next.png", stage3story, 1060, 350);
+	auto Game3End = Scene::create("stage2", "images/stage2story.png");
 
 
 
@@ -313,13 +323,12 @@ int main()
 	//-----start scene ----------
 	auto game2intro = Scene::create("game2intro", "images2/startscene.png");
 	auto badbgm = Sound::create("images2/badbgm.mp3");
-	auto method = Object::create("images/game2method.png", game2intro, 710, 250);
-	auto startbtn = Object::create("images2/startbtn.png", game2intro, 850, 170);
-	startbtn->setScale(0.2f);
+	auto method = Object::create("images2/game2method.png", game2intro, 720, 200);
+	auto game2startbtn = Object::create("images2/startbtn.png", game2intro, 590, 0);
+	game2startbtn->setScale(0.15f);
 
 	// game scene
 	auto game2scene = Scene::create("Hamburger Game", "images2/backgroundscene.png");
-
 	auto bigmac = Sound::create("images2/bigmac.mp3");
 
 
@@ -367,10 +376,15 @@ int main()
 //GAME 3 변수
 
 	//1280 * 720 화면
+	auto game3intro = Scene::create("escape game", "images/game3intro.png");
+	auto game3startbtn = Object::create("images2/startbtn.png", game3intro, 800, 80);
+	game3startbtn->setScale(0.1f);
+
+
+
 	auto game3scene = Scene::create("escape game", "images3/sea.png");
 
 	// garden 크기 : 2560 x 1680  
-
 	// 맵의 맨 왼쪽, 맨 아랫 상단은 초기 scene에서 (480,-960) 좌표에 위치한다.
 	auto garden = Object::create("images3/garden2.png", game3scene, 480, -960);
 	auto character = Object::create("images3/yonggam7.png", game3scene, 480, 165);
@@ -408,7 +422,6 @@ int main()
 	auto rocketStopTimer = Timer::create(0.1f);
 
 	// 이동제어 - 키보드 입력
-
 	int pressedkey = 0;
 	int moveX, moveY = 0;
 	auto keyMoveTimer = Timer::create(0.1f);
@@ -438,8 +451,8 @@ int main()
 	});
 
 	nextToGame3->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
-		game3scene->enter();
-		rocketMoveTimer->start();
+		game3intro->enter();
+
 		return true;
 	});
 
@@ -447,7 +460,7 @@ int main()
 //GAME2 제어함수 
 	makingImage(filename, number, comboNum, num_index, index, game2scene);
 
-	startbtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+	game2startbtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		game2scene->enter();
 		bigmac->play(true);
 		badbgm->stop();
@@ -511,7 +524,7 @@ int main()
 				basetimer->stop();
 				makeTimer(bread1, clear, combo, comboNum, cnt, q_index, answerX, answerY, breadTimer, clearTimer, comboTimer, game2scene);
 				clearArray(key_press, ingredient, q_ingredient, q_index, key_index, key_flag);
-				if (cnt > 1) {
+				if (cnt > 0) {
 					basetimer->stop();
 					bigmac->stop();
 					hideTimer();
@@ -525,7 +538,13 @@ int main()
 	});
 
 
-// GAME 3 제어함수
+	// GAME 3 제어함수
+	game3startbtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+		game3scene->enter();
+		rocketMoveTimer->start();
+		return true;
+	});
+
 	rocketStopTimer->setOnTimerCallback([&](TimerPtr timer)->bool {
 		explode->hide();
 		hearts[--heartCount]->setImage("images3/emptyheart.png");
