@@ -722,55 +722,62 @@ int main()
 		});
 
 	right->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
-		//1. 기본 -> right
-		if ((toy_class.px == 360) && (toy_class.py == -20) && (toy_class.pcnt == 0)) {
-			toy_class.px = 440;
-			toy->locate(game1, toy_class.px, toy_class.py);
-			toy_class.pcnt++;
-			gaugecheck(toy_class.pcnt, paw);
+		if (check_start == 1) {
+			//1. 기본 -> right
+			if ((toy_class.px == 360) && (toy_class.py == -20) && (toy_class.pcnt == 0)) {
+				toy_class.px = 440;
+				toy->locate(game1, toy_class.px, toy_class.py);
+				toy_class.pcnt++;
+				gaugecheck(toy_class.pcnt, paw);
 
-			if (pawcnt < 5) {
-				cat->hide();
-				cat_1_right->show();
+				if (pawcnt < 5) {
+					cat->hide();
+					cat_1_right->show();
+				}
+				else if (pawcnt >= 5 && pawcnt < 10) {
+					cat_1_left->hide();
+					cat_2_left->hide();
+					cat_2_right->show();
+				}
+				else if (pawcnt == 10) {
+					cat_2_left->hide();
+					cat_final->show();
+				}
+
 			}
-			else if (pawcnt >= 5 && pawcnt < 10) {
-				cat_1_left->hide();
-				cat_2_left->hide();
-				cat_2_right->show();
-			}
-			else if (pawcnt == 10) {
-				cat_2_left->hide();
-				cat_final->show();
+			//2. left -> right
+			if ((toy_class.px == 290) && (toy_class.py == -20) && (toy_class.pcnt != 0)) {
+				toy_class.px = 440;
+				toy->locate(game1, toy_class.px, toy_class.py);
+				toy_class.pcnt++;
+				gaugecheck(toy_class.pcnt, paw);
+
+				if (pawcnt < 5) {
+					cat_1_left->hide();
+					cat_1_right->show();
+				}
+				else if (pawcnt >= 5 && pawcnt < 10) {
+					cat_1_left->hide();
+					cat_2_left->hide();
+					cat_2_right->show();
+				}
+				else if (pawcnt == 10) {
+					cat_2_left->hide();
+					cat_final->show();
+				}
 			}
 
+			if (pawcnt == 10) {
+				game1MainTimer->stop();
+				showMessage("고양이를 나오게 하는 데에 성공했습니다! 꼬리 털을 가져가세요!");
+				hideTimer();
+
+			}
 		}
-		//2. left -> right
-		if ((toy_class.px == 290) && (toy_class.py == -20) && (toy_class.pcnt != 0)) {
-			toy_class.px = 440;
-			toy->locate(game1, toy_class.px, toy_class.py);
-			toy_class.pcnt++;
-			gaugecheck(toy_class.pcnt, paw);
 
-			if (pawcnt < 5) {
-				cat_1_left->hide();
-				cat_1_right->show();
-			}
-			else if (pawcnt >= 5 && pawcnt < 10) {
-				cat_1_left->hide();
-				cat_2_left->hide();
-				cat_2_right->show();
-			}
-			else if (pawcnt == 10) {
-				cat_2_left->hide();
-				cat_final->show();
-			}
-		}
-
-		if (pawcnt == 10) {
-			game1MainTimer->stop();
-			showMessage("고양이를 나오게 하는 데에 성공했습니다! 꼬리 털을 가져가세요!");
-			hideTimer();
-	
+		else {
+			toy_class.pcnt = 0;
+			showMessage("start 버튼을 클릭하세요!");
 		}
 
 		return true;
@@ -879,6 +886,7 @@ int main()
 		hearts[--heartCount]->setImage("images3/emptyheart.png");
 
 		// 게임종료
+
 		if (heartCount == 0)
 		{
 			rocketMoveTimer->stop();
