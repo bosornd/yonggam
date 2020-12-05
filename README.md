@@ -1,2 +1,2 @@
-# yonggammovemove
+# yonggam
 jingyeong part
