@@ -54,9 +54,11 @@ group 2 :: 박진경, 정도현, 임채원
 
 ## STAGE 3 : 로켓이 날아오는 미로 정원에서 무사히 뿔과 왕관을 찾아 탈출!
 
-![image](https://user-images.githubusercontent.com/54882655/101262651-9e3d6800-3783-11eb-96c8-e8f442bf7f71.png)
+![stage3story](https://user-images.githubusercontent.com/54882655/101263041-e65d8a00-3785-11eb-89b5-83898c912746.png)
 
 햄버거 가게에서 고되게 일해 날개까지 얻어낸 용감이! 용감 왕국의 왕이 되기 위해서는 마지막으로 용감 왕국의 왕성 미로 정원에서 날아오는 로켓들을 피해 뿔과 왕관을 찾아야 합니다. 
+
+![image](https://user-images.githubusercontent.com/54882655/101262651-9e3d6800-3783-11eb-96c8-e8f442bf7f71.png)
 
 방향키로 미로 정원에서 로켓을 피해 다니며 뿔과 왕관을 찾아 미로를 탈출해 봅시다.
 
