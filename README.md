@@ -3,6 +3,10 @@ group 2 :: 박진경, 정도현, 임채원
 
 본 게임은 C++와 방탈 라이브러리(https://cafe.naver.com/bangtal)를 사용하여 만든 게임입니다.
 
+### 게임 다운로드 및 설치
+
+yonggam/game/yonggam_installer.msi 다운로드 후 설치 --> 기본 저장 경로는 C:\Program Files (x86)\group_2\yonggam_installer
+
 ### 게임 소개 영상(유튜브 링크) 
 
 https://www.youtube.com/watch?v=Dj63s7QQd28&feature=youtu.be (게임 방법은 영상을 참고하시는 것이 훨씬 좋습니다!)
