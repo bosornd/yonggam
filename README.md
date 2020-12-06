@@ -1,7 +1,7 @@
 # 용감이 키우기
 group 2 :: 박진경, 정도현, 임채원
 
-본 게임은 C++와 방탈 라이브러리(https://cafe.naver.com/bangtal)를 사용하여 만든 게임입니다.
+본 게임은 C++와 방탈 라이브러리(https://cafe.naver.com/bangtal) 를 사용하여 만든 게임입니다.
 
 ### 게임 다운로드 및 설치
 
