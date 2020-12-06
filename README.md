@@ -9,8 +9,7 @@ game\yonggam_installer\yonggam_installer.msi 다운로드 후 설치 --> 설치 
 
 ### 게임 소개 영상(유튜브 링크) 
 
-https://www.youtube.com/watch?v=Dj63s7QQd28&feature=youtu.be (게임 방법은 영상을 참고하시는 것이 훨씬 좋습니다!)
-
+https://youtu.be/jEFXjITbIK8 (게임 방법은 영상을 참고하시는 것이 훨씬 좋습니다!)
 
 ## 게임 설명
 
