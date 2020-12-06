@@ -33,6 +33,12 @@ public:
 };
 
 void gaugecheck(int pcnt, ObjectPtr paw[]) {
+	if (pcnt == 0) { //재시작 시 초기화를 위해
+		for (int i = 0; i < 10; i++) {
+			paw[i]->hide(); //모든 게이지 초기화
+		}
+		pawcnt = 0;
+	}
 	if (pcnt == 3) {
 		paw[0]->show();
 		pawcnt = 1;
@@ -399,6 +405,7 @@ int main()
 
 	//lose page
 	auto lose1 = Scene::create("stage3", "images/lose1.png");
+	auto re_start = Object::create("images1/restart.png", lose1, 800, 100); //재시작을 위한 변수 re_start
 	auto lose2 = Scene::create("stage3", "images/lose2.png");
 	auto lose3 = Scene::create("stage3", "images/lose3.png");
 	auto loseMusic = Sound::create("images/lose.mp3");
@@ -816,6 +823,33 @@ int main()
 
 		return true;
 	});
+
+	//실패 시 재시작
+
+	re_start->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+		toy_class.pcnt = 0;
+		toy_class.px = 360;
+		toy_class.py = -20;
+
+		gaugecheck(toy_class.pcnt, paw);
+
+		cat_1_left->hide();
+		cat_1_right->hide();
+		cat_2_left->hide();
+		cat_2_right->hide();
+		cat_final->hide();
+		cat->show();
+
+		game1->enter();
+		game1MainTimer->set(15.f);
+		showTimer(game1MainTimer);
+		game1MainTimer->start();
+
+		loseMusic->stop();
+		game1Music->play();
+
+		return true;
+		});
 
 //GAME2 제어함수 
 	makingImage(filename, number, comboNum, num_index, index, game2scene);
