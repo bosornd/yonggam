@@ -363,10 +363,8 @@ int main()
 	auto stage3 = Scene::create("stage3", "images/stage3.png");
 	auto stage3story = Scene::create("stage3", "images/stage3story.png");
 	auto nextToGame3 = Object::create("images/next.png", stage3story, 1120, 10);
-
-
-	auto Game3End = Scene::create("stage2", "images/stage2story.png");
 	nextToGame3->setScale(0.8f);
+
 
 	
 	//win page
