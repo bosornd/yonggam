@@ -12,11 +12,11 @@ using namespace std;
 // 키보드 
 enum
 {
-		UP = 84,
-		LEFT = 82,
-		RIGHT = 83,
-		DOWN = 85,
-		SPACEBAR = 75
+	UP = 84,
+	LEFT = 82,
+	RIGHT = 83,
+	DOWN = 85,
+	SPACEBAR = 75
 };
 
 // GAME 1 메서드
@@ -86,7 +86,7 @@ void gaugecheck(int pcnt, ObjectPtr paw[]) {
 
 // GAME 2 메서드
 void makingImage(string filename[5], string number[10], ObjectPtr comboNum[10], int& num_index, int& index, ScenePtr& game2scene) {
-	for (num_index = 0; num_index < 10; num_index++) 
+	for (num_index = 0; num_index < 10; num_index++)
 	{
 		number[num_index] = "images2/" + to_string(num_index + 1) + ".png";
 		comboNum[num_index] = Object::create(number[num_index], game2scene, 515, 500, false);
@@ -98,7 +98,7 @@ void makingImage(string filename[5], string number[10], ObjectPtr comboNum[10], 
 }
 
 void ingredientCase(int& num, int& i, int& level, int question[], ObjectPtr q_ingredient[], string filename[], ScenePtr& game2scene, int questX, int questY[], ObjectPtr& q_bread1) {
-	for (i = 0; i < level; i++) 
+	for (i = 0; i < level; i++)
 	{
 		num = rand() % 5;
 		switch (num) {
@@ -134,7 +134,7 @@ void ingredientCase(int& num, int& i, int& level, int question[], ObjectPtr q_in
 }
 
 void ingredient2case(int& q_index, int& key_flag, int question[], ObjectPtr ingredient[], string filename[], ScenePtr& game2scene, int& answerX, int answerY[]) {
-	switch (question[q_index]) 
+	switch (question[q_index])
 	{
 	case UP:
 		ingredient[q_index] = Object::create(filename[0], game2scene, answerX, answerY[q_index]);
@@ -161,16 +161,16 @@ void ingredient2case(int& q_index, int& key_flag, int question[], ObjectPtr ingr
 	q_index++;
 }
 void clearArray(int key_press[], ObjectPtr ingredient[], ObjectPtr q_ingredient[], int& q_index, int& key_index, int& key_flag) {
-	for (int i = 0; i < 100; i++) 
+	for (int i = 0; i < 100; i++)
 	{
 		key_press[i] = 0;
 	}
-	for (int i = 0; i < 5; i++) 
+	for (int i = 0; i < 5; i++)
 	{
 		ingredient[i]->hide();
 		ingredient[i] = nullptr;
 	}
-	for (int i = 0; i < 5; i++) 
+	for (int i = 0; i < 5; i++)
 	{
 		q_ingredient[i]->hide();
 		q_ingredient[i] = nullptr;
@@ -237,7 +237,7 @@ Pos now;
 Pos criteria;
 
 
-void initGame3(ScenePtr scene, ObjectPtr* rockets, ObjectPtr* hearts, int&findCon,int&findCrown, int&xspeed, int&heartCount, int& located, ObjectPtr garden, ObjectPtr crown, ObjectPtr con, ObjectPtr explode)
+void initGame3(ScenePtr scene, ObjectPtr* rockets, ObjectPtr* hearts, int& findCon, int& findCrown, int& xspeed, int& heartCount, int& located, ObjectPtr garden, ObjectPtr crown, ObjectPtr con, ObjectPtr explode)
 {
 	// map 내에서의 좌표
 	now.x = 0;
@@ -271,7 +271,7 @@ void initGame3(ScenePtr scene, ObjectPtr* rockets, ObjectPtr* hearts, int&findCo
 	for (int i = 0; i < 3; i++)
 	{
 		hearts[i]->setImage("images3/filledheart.png");
-		hearts[i] ->locate(scene, 700 + 80 * i, 600);
+		hearts[i]->locate(scene, 700 + 80 * i, 600);
 	}
 	return;
 }
@@ -286,7 +286,7 @@ int sceneChange(int xMove, int yMove)
 	now.x = now.x + xMove;
 	now.y = now.y + yMove;
 
-	
+
 
 	return map[now.y][now.x];
 }
@@ -310,7 +310,7 @@ void rocketInitPos(Pos* rocketPos)
 
 bool checkTouched(int x, int y)
 {
-	return (475<= x && x<=480 && 155 <= y && y<= 160);
+	return (475 <= x && x <= 480 && 155 <= y && y <= 160);
 
 }
 
@@ -321,7 +321,7 @@ bool moveRocket(ScenePtr scene, ObjectPtr* rockets, Pos* rocketPos, int xspeed, 
 
 	for (int i = 0; i < 10; i++)
 	{
-		x = rocketPos[i].x * 80 - xspeed *8; //좌표 계속 변경
+		x = rocketPos[i].x * 80 - xspeed * 8; //좌표 계속 변경
 		y = rocketPos[i].y * 80 + (criteria.y * 80);
 
 		rockets[i]->locate(scene, x, y);
@@ -354,9 +354,9 @@ int main()
 	setGameOption(GameOption::GAME_OPTION_ROOM_TITLE, false);
 
 
-// intro
+	// intro
 
-	//scenechange Timer
+		//scenechange Timer
 	auto sceneTimer = Timer::create(1.5f);
 	auto sceneTimer2 = Timer::create(1.5f);
 	auto sceneTimer3 = Timer::create(1.5f);
@@ -371,7 +371,7 @@ int main()
 
 	auto nextToStage1 = Object::create("images/next.png", intro, 990, 10);
 	nextToStage1->setScale(0.8f);
-	
+
 	//stage1
 	auto stage1 = Scene::create("stage1", "images/stage1.png");
 	auto stage1story = Scene::create("stage1", "images/stage1story.png");
@@ -383,7 +383,7 @@ int main()
 	auto stage2story = Scene::create("stage2", "images/stage2story.png");
 	auto nextToGame2 = Object::create("images/next.png", stage2story, 1120, 10);
 	nextToGame2->setScale(0.8f);
-	
+
 
 	// stage3 
 	auto stage3 = Scene::create("stage3", "images/stage3.png");
@@ -392,7 +392,7 @@ int main()
 	nextToGame3->setScale(0.8f);
 
 
-	
+
 	//win page
 	auto win1 = Scene::create("stage3", "images/win1.png");
 	auto nextToStage2 = Object::create("images/next.png", win1, 1120, 10);
@@ -416,7 +416,7 @@ int main()
 	// end page
 	auto end = Scene::create("stage3", "images/end.png");
 
-// GAME 1 변수
+	// GAME 1 변수
 
 	auto game1intro = Scene::create("", "images1/game1intro.png");
 	auto game1 = Scene::create("", "images1/room (1).png");
@@ -472,13 +472,13 @@ int main()
 
 
 
-// GAME 2 변수
+	// GAME 2 변수
 
-	//-----start scene ----------
+		//-----start scene ----------
 	auto game2intro = Scene::create("game2intro", "images2/startscene.png");
 	auto badbgm = Sound::create("images2/badbgm.mp3");
 	auto method = Object::create("images2/game2method.png", game2intro, 720, 200);
-	auto game2startbtn = Object::create("images1/start.png", game2intro,853, 150);
+	auto game2startbtn = Object::create("images1/start.png", game2intro, 853, 150);
 	game2startbtn->setScale(0.5f);
 
 
@@ -530,9 +530,9 @@ int main()
 
 
 
-//GAME 3 변수
+	//GAME 3 변수
 
-	//1280 * 720 화면
+		//1280 * 720 화면
 	auto game3intro = Scene::create("escape game", "images3/game3intro.png");
 	auto game3startBtn = Object::create("images1/start.png", game3intro, 740, 70);
 	game3startBtn->setScale(0.5f);
@@ -549,7 +549,7 @@ int main()
 	// 콘, 왕관
 	auto crown = Object::create("images3/crown.png", game3scene, 480 + 18 * 80, -960 + 18 * 80); //가든 모서리를 기준으로 (18 * 80 ,18*80 ) 떨어진 곳에 위치  480 + (18*80) , -960 + 18 * 80 
 	auto con = Object::create("images3/key.png", game3scene, 480 + 24 * 80, -960); // 가든 모서리를 기준으로 (24 * 80 , 0) 떨어진 곳에 위치 480 + (24*80), -960 
-	
+
 	int findCon;
 	int findCrown;
 
@@ -605,9 +605,9 @@ int main()
 
 
 
-//인트로 제어함수
+	//인트로 제어함수
 
-	//--------------------------scenechange timercallback-----------------------
+		//--------------------------scenechange timercallback-----------------------
 	sceneTimer->setOnTimerCallback([&](TimerPtr sceneT)->bool {
 		stage1story->enter();
 		return true;
@@ -617,7 +617,7 @@ int main()
 		stage2story->enter();
 		return true;
 		});
-	
+
 	sceneTimer3->setOnTimerCallback([&](TimerPtr sceneT)->bool {
 		stage3story->enter();
 		return true;
@@ -625,7 +625,7 @@ int main()
 	sceneTimerEnd->setOnTimerCallback([&](TimerPtr sceneT)->bool {
 		end->enter();
 		return true;
-	});
+		});
 
 	// -------------------------------- scenechange mousecallback ---------------------
 	//stage1
@@ -640,7 +640,7 @@ int main()
 		introMusic->stop();
 		game1Music->play();
 		return true;
-	});
+		});
 
 
 	//stage2
@@ -657,7 +657,7 @@ int main()
 		introMusic->stop();
 		badbgm->play();
 		return true;
-	});
+		});
 
 	//stage3
 	nextToStage3->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
@@ -673,18 +673,18 @@ int main()
 		introMusic->stop();
 		game3Music->play();
 		return true;
-	});
+		});
 
 
 
-//GAME1 제어함수
+	//GAME1 제어함수
 	game1MainTimer->setOnTimerCallback([&](TimerPtr)->bool {
 		hideTimer();
 		lose1->enter();
 		game1Music->stop();
 		loseMusic->play();
 		return true;
-	});
+		});
 
 	cat_start->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		game1->enter();
@@ -692,14 +692,14 @@ int main()
 		game1MainTimer->start();
 		check_start = 1;
 		return true;
-	});
+		});
 
 	tail->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		win1->enter();
 		game1Music->stop();
 		winMusic->play();
 		return true;
-	});
+		});
 
 
 	left->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
@@ -753,8 +753,8 @@ int main()
 				game1MainTimer->stop();
 				showMessage("고양이를 나오게 하는 데에 성공했습니다! 쇼파에 있는 꼬리 털을 클릭하여 가져가세요!");
 				hideTimer();
-			
-				
+
+
 			}
 		}
 
@@ -826,7 +826,7 @@ int main()
 		}
 
 		return true;
-	});
+		});
 
 
 
@@ -857,7 +857,7 @@ int main()
 		return true;
 		});
 
-//GAME2 제어함수 
+	//GAME2 제어함수 
 	makingImage(filename, number, comboNum, num_index, index, game2scene);
 
 	game2startbtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
@@ -898,7 +898,7 @@ int main()
 		return true;
 		});
 	timer->start();
-	
+
 
 	auto clearTimer = Timer::create(0.3f);
 	clearTimer->setOnTimerCallback([&](TimerPtr clearT)->bool {
@@ -925,20 +925,12 @@ int main()
 		return true;
 		});
 
-	game2BaseTimer->setOnTimerCallback([&](TimerPtr baseT)->bool {
-		game2BaseTimer->stop();
-		bigmac->stop();
-		loseMusic->play();
-		lose2->enter();
-	
-		return true;
-	});
 
 	game2scene->setOnKeyboardCallback([&](ScenePtr game2scene, int key, bool pressed)->bool {
 		game2BaseTimer->start();
 		key_press[key_index] = key;
 		timer->stop();
-		if (key_index % 2 == 0) 
+		if (key_index % 2 == 0)
 		{
 			if (question[q_index] == key_press[key_index]) {
 				ingredient2case(q_index, key_flag, question, ingredient, filename, game2scene, answerX, answerY);
@@ -969,14 +961,29 @@ int main()
 					hideTimer();
 					win2->enter();
 					winMusic->play();
-					
+
 				}
 				timer->start();
 			}
 		}
 		key_index++;
 		return true;
-	});
+		});
+	game2BaseTimer->setOnTimerCallback([&](TimerPtr baseT)->bool {
+		game2BaseTimer->stop();
+		bigmac->stop();
+		for (auto& e : key_press) {
+			e = 0;
+		}
+		q_index = 0;
+		key_index = 0;
+		key_flag = 0;
+		loseMusic->play();
+		lose2->enter();
+		re_start2->show();
+		hideTimer();
+		return true;
+		});
 
 
 
@@ -986,23 +993,23 @@ int main()
 		game3scene->enter();
 		rocketMoveTimer->start();
 		return true;
-	});
+		});
 
 
-	game3restartBtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool 
-	{
+	game3restartBtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool
+		{
 
-		initGame3(game3scene, rockets, hearts, findCon, findCrown, xspeed, heartCount, located, garden, crown, con, explode);
-		rocketInitPos(rocketPos);
+			initGame3(game3scene, rockets, hearts, findCon, findCrown, xspeed, heartCount, located, garden, crown, con, explode);
+			rocketInitPos(rocketPos);
 
-		game3intro->enter();
-		loseMusic->stop();
-		game3Music->play();
-		return true;
-	});
+			game3intro->enter();
+			loseMusic->stop();
+			game3Music->play();
+			return true;
+		});
 
 	rocketStopTimer->setOnTimerCallback([&](TimerPtr timer)->bool {
-	
+
 		hearts[--heartCount]->setImage("images3/emptyheart.png");
 		explode->hide();
 		rocketStopTimer->set(0.1f);
@@ -1013,8 +1020,8 @@ int main()
 			rocketMoveTimer->stop();
 			keyMoveTimer->stop();
 			keyMoveTimer->stop();
-			 
-			if(findCrown == 1) crown->drop();
+
+			if (findCrown == 1) crown->drop();
 			if (findCon == 1) con->drop();
 			game3Music->stop();
 
@@ -1023,12 +1030,12 @@ int main()
 
 		}
 		return true;
-	});
+		});
 
 
 
 	keyMoveTimer->setOnTimerCallback([&](TimerPtr timer)->bool
-	{
+		{
 			switch (pressedkey)
 			{
 			case LEFT:
@@ -1036,7 +1043,7 @@ int main()
 				{
 					moveX = -1; moveY = 0;
 					located = sceneChange(moveX, moveY);
-		
+
 				}
 				break;
 
@@ -1069,7 +1076,7 @@ int main()
 			{
 				findCrown = 1;
 				crown->pick();
-				
+
 			}
 
 			// 뿔위치
@@ -1106,7 +1113,7 @@ int main()
 			keyMoveTimer->start();
 
 			return true;
-	});
+		});
 
 	game3scene->setOnKeyboardCallback([&](ScenePtr scene, int key, bool pressed)->bool
 		{
@@ -1122,7 +1129,7 @@ int main()
 
 
 	rocketMoveTimer->setOnTimerCallback([&](TimerPtr timer)->bool
-	{
+		{
 			// 모든 로켓이 지나갔는지 확인 
 			if (moveRocket(game3scene, rockets, rocketPos, xspeed, explode, rocketStopTimer))
 			{
@@ -1133,7 +1140,7 @@ int main()
 			rocketMoveTimer->start();
 			xspeed++;
 			return true;
-	});
+		});
 
 
 
