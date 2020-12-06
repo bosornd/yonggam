@@ -5,7 +5,7 @@ group 2 :: 박진경, 정도현, 임채원
 
 ### 게임 다운로드 및 설치
 
-yonggam/game/yonggam_installer.msi 다운로드 후 설치 --> 기본 저장 경로는 C:\Program Files (x86)\group_2\yonggam_installer
+game\yonggam_installer\yonggam_installer.msi 다운로드 후 설치 --> 설치 후 기본 저장 경로는 C:\Program Files (x86)\group_2\yonggam_installer
 
 ### 게임 소개 영상(유튜브 링크) 
 
