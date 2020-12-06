@@ -870,9 +870,10 @@ int main()
 		});
 
 	re_start2->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
-		intro->enter();
+		game2intro->enter();
+		cnt = 1;
 		game2BaseTimer->set(5.0f);
-		introMusic->play(true);
+		badbgm->play(true);
 		loseMusic->stop();
 		for (auto& e1 : ingredient) {
 			if (e1 != nullptr) {
@@ -953,7 +954,8 @@ int main()
 				bigmac->stop();
 				loseMusic->play();
 				lose2->enter();
-
+				re_start2->show();
+				hideTimer();
 			}
 			else if (question[q_index] == 0 && key_flag == 1) {
 				game2BaseTimer->set(5.0f);
