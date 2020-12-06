@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "game.vcxproj", "{90D51DBA-72F5-490A-BF99-A1C62D95B9FA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "yonggam_installer", "yonggam_installer\yonggam_installer.vdproj", "{D93B2E2F-37F4-4D30-BF14-EAC7CAFE3CE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{90D51DBA-72F5-490A-BF99-A1C62D95B9FA}.Release|x64.Build.0 = Release|x64
 		{90D51DBA-72F5-490A-BF99-A1C62D95B9FA}.Release|x86.ActiveCfg = Release|Win32
 		{90D51DBA-72F5-490A-BF99-A1C62D95B9FA}.Release|x86.Build.0 = Release|Win32
+		{D93B2E2F-37F4-4D30-BF14-EAC7CAFE3CE2}.Debug|x64.ActiveCfg = Debug
+		{D93B2E2F-37F4-4D30-BF14-EAC7CAFE3CE2}.Debug|x86.ActiveCfg = Debug
+		{D93B2E2F-37F4-4D30-BF14-EAC7CAFE3CE2}.Release|x64.ActiveCfg = Release
+		{D93B2E2F-37F4-4D30-BF14-EAC7CAFE3CE2}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
