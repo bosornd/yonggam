@@ -406,7 +406,10 @@ int main()
 	//lose page
 	auto lose1 = Scene::create("stage3", "images/lose1.png");
 	auto re_start = Object::create("images1/restart.png", lose1, 800, 100); //재시작을 위한 변수 re_start
+
 	auto lose2 = Scene::create("stage3", "images/lose2.png");
+	auto re_start2 = Object::create("images1/restart.png", lose2, 800, 100); //restart
+
 	auto lose3 = Scene::create("stage3", "images/lose3.png");
 	auto loseMusic = Sound::create("images/lose.mp3");
 
@@ -477,6 +480,7 @@ int main()
 	auto method = Object::create("images2/game2method.png", game2intro, 720, 200);
 	auto game2startbtn = Object::create("images1/start.png", game2intro,853, 150);
 	game2startbtn->setScale(0.5f);
+
 
 	// game scene
 	auto game2scene = Scene::create("Hamburger Game", "images2/backgroundscene.png");
@@ -824,6 +828,8 @@ int main()
 		return true;
 	});
 
+
+
 	//실패 시 재시작
 
 	re_start->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
@@ -859,9 +865,32 @@ int main()
 		showTimer(game2BaseTimer);
 		bigmac->play(true);
 		badbgm->stop();
+		timer->start();
 		return true;
 		});
 
+	re_start2->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+		intro->enter();
+		game2BaseTimer->set(5.0f);
+		introMusic->play(true);
+		loseMusic->stop();
+		for (auto& e1 : ingredient) {
+			if (e1 != nullptr) {
+				e1->hide();
+			}
+			e1 = nullptr;
+		}
+		for (auto& e2 : q_ingredient) {
+			if (e2 != nullptr) {
+				e2->hide();
+			}
+			e2 = nullptr;
+		}
+		q_bread1->hide();
+		bigmac->stop();
+		re_start2->hide();
+		return true;
+		});
 
 	timer->setOnTimerCallback([&](TimerPtr t)->bool {
 		ingredientCase(num, i, level, question, q_ingredient, filename, game2scene, questX, questY, q_bread1);
@@ -915,10 +944,16 @@ int main()
 			}
 			else if (question[q_index] != key_press[key_index] && question[q_index] != 0) {
 				game2BaseTimer->stop();
+				for (auto& e : key_press) {
+					e = 0;
+				}
+				q_index = 0;
+				key_index = 0;
+				key_flag = 0;
 				bigmac->stop();
 				loseMusic->play();
 				lose2->enter();
-			
+
 			}
 			else if (question[q_index] == 0 && key_flag == 1) {
 				game2BaseTimer->set(5.0f);
