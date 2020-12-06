@@ -3,7 +3,7 @@ group 2 :: 박진경, 정도현, 임채원
 
 본 게임은 C++와 방탈 라이브러리(https://cafe.naver.com/bangtal)를 사용하여 만든 게임입니다.
 
-유튜브 링크 --> https://www.youtube.com/watch?v=Dj63s7QQd28&feature=youtu.be
+게임 소개 영상(유튜브 링크) --> https://www.youtube.com/watch?v=Dj63s7QQd28&feature=youtu.be
 
 (게임 방법은 영상을 참고하시는 것이 훨씬 좋습니다!)
 
