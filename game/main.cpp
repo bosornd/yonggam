@@ -193,13 +193,14 @@ void makeTimer(ObjectPtr& bread1, ObjectPtr& clear, ObjectPtr& combo, ObjectPtr 
 //GAME3 메서드
 
 // game3 좌표 위치
+
 typedef struct _pos {
 	int x = 0;
 	int y = 0;
 }Pos;
 
 // Game3 map
-int map[21][32] = {
+const int map[21][32] = {
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,5,1,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -229,7 +230,8 @@ Pos now;
 // game3 맵이 씬에서 어디에 위치인지 기준점을 잡아준다.
 Pos criteria;
 
-void init(ScenePtr scene, ObjectPtr* rockets, ObjectPtr* hearts)
+
+void initGame3(ScenePtr scene, ObjectPtr* rockets, ObjectPtr* hearts, int&findCon,int&findCrown, int&xspeed, int&heartCount, int& located, ObjectPtr garden, ObjectPtr crown, ObjectPtr con, ObjectPtr explode)
 {
 	// map 내에서의 좌표
 	now.x = 0;
@@ -239,14 +241,31 @@ void init(ScenePtr scene, ObjectPtr* rockets, ObjectPtr* hearts)
 	criteria.x = 6;
 	criteria.y = -12;
 
-	for (int i = 0; i < 20; i++)
+	//변수 초기화
+	findCon = 0;
+	findCrown = 0;
+
+	xspeed = 0;
+	heartCount = 3;
+	located = 0;
+
+
+
+	garden->locate(scene, 480, -960);
+
+	crown->locate(scene, 480 + 18 * 80, -960 + 18 * 80); //가든 모서리를 기준으로 (18 * 80 ,18*80 ) 떨어진 곳에 위치  480 + (18*80) , -960 + 18 * 80 
+	con->locate(scene, 480 + 24 * 80, -960); // 가든 모서리를 기준으로 (24 * 80 , 0) 떨어진 곳에 위치 480 + (24*80), -960 
+	explode->hide();
+
+	for (int i = 0; i < 10; i++)
 	{
-		rockets[i] = Object::create("images3/rocket.png", scene, 1280, 0);
+		rockets[i]->locate(scene, 1280, 0);
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		hearts[i] = Object::create("images3/filledheart.png", scene, 700 + 80 * i, 600);
+		hearts[i]->setImage("images3/filledheart.png");
+		hearts[i] ->locate(scene, 700 + 80 * i, 600);
 	}
 	return;
 }
@@ -275,7 +294,7 @@ bool moveAvailable(int xMove, int yMove)
 void rocketInitPos(Pos* rocketPos)
 {
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		rocketPos[i].x = 16 + rand() % 8; // 화면 밖의 좌표에 설정
 		rocketPos[i].y = rand() % 21;
@@ -294,9 +313,9 @@ bool moveRocket(ScenePtr scene, ObjectPtr* rockets, Pos* rocketPos, int xspeed, 
 	int x, y;
 	int finishCount = 0;
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 10; i++)
 	{
-		x = rocketPos[i].x * 80 - xspeed * 5; //좌표 계속 변경
+		x = rocketPos[i].x * 80 - xspeed *8; //좌표 계속 변경
 		y = rocketPos[i].y * 80 + (criteria.y * 80);
 
 		rockets[i]->locate(scene, x, y);
@@ -314,7 +333,7 @@ bool moveRocket(ScenePtr scene, ObjectPtr* rockets, Pos* rocketPos, int xspeed, 
 	}
 
 	//모든 로켓이 화면을 벗어나면 
-	return finishCount == 20;
+	return finishCount == 10;
 }
 
 
@@ -335,6 +354,7 @@ int main()
 	auto sceneTimer = Timer::create(1.5f);
 	auto sceneTimer2 = Timer::create(1.5f);
 	auto sceneTimer3 = Timer::create(1.5f);
+	auto sceneTimerEnd = Timer::create(3.f);
 
 
 
@@ -375,7 +395,6 @@ int main()
 	auto nextToStage3 = Object::create("images/next.png", win2, 1120, 10);
 
 	auto win3 = Scene::create("stage3", "images/win3.png");
-	auto nextToEnd = Object::create("images/next.png", win3, 1120, 10);
 	auto winMusic = Sound::create("images/win.mp3");
 
 	//lose page
@@ -504,8 +523,8 @@ int main()
 
 	//1280 * 720 화면
 	auto game3intro = Scene::create("escape game", "images3/game3intro.png");
-	auto game3startbtn = Object::create("images1/start.png", game3intro, 740, 70);
-	game3startbtn->setScale(0.5f);
+	auto game3startBtn = Object::create("images1/start.png", game3intro, 740, 70);
+	game3startBtn->setScale(0.5f);
 
 	auto game3scene = Scene::create("escape game", "images3/sea.png");
 	auto game3Music = Sound::create("images3/game3bgm.mp3");
@@ -514,34 +533,33 @@ int main()
 	// 맵의 맨 왼쪽, 맨 아랫 상단은 초기 scene에서 (480,-960) 좌표에 위치한다.
 	auto garden = Object::create("images3/garden2.png", game3scene, 480, -960);
 	auto character = Object::create("images3/yonggam7.png", game3scene, 480, 165);
+	int located;
 
 	// 콘, 왕관
 	auto crown = Object::create("images3/crown.png", game3scene, 480 + 18 * 80, -960 + 18 * 80); //가든 모서리를 기준으로 (18 * 80 ,18*80 ) 떨어진 곳에 위치  480 + (18*80) , -960 + 18 * 80 
 	auto con = Object::create("images3/key.png", game3scene, 480 + 24 * 80, -960); // 가든 모서리를 기준으로 (24 * 80 , 0) 떨어진 곳에 위치 480 + (24*80), -960 
-	int find = 0;
+	
+	int findCon;
+	int findCrown;
 
 	// 안내 지도
 	auto guide = Object::create("images3/map.png", game3scene, 1000, 500);
 
 	// 날라오는 로켓들 
-	ObjectPtr rockets[20];
-	Pos rocketPos[20];
-	int xspeed = 0;
+	ObjectPtr rockets[10];
+	Pos rocketPos[10];
+	int xspeed;
 
+
+	// end, restart
+	auto game3restartBtn = Object::create("images3/restart.png", lose3, 800, 100);
 
 	// 생명
 	ObjectPtr hearts[3];
-	int heartCount = 3;
-
-
-	// 초기화 
-	init(game3scene, rockets, hearts);
-	rocketInitPos(rocketPos);
+	int heartCount;
 
 	// 폭발
 	auto explode = Object::create("images3/explode.png", game3scene, 480, 160);
-	explode->hide();
-
 
 
 	// 폭발했을 때를 위한 제어
@@ -555,6 +573,25 @@ int main()
 
 	// 로켓의 움직임을 제어 
 	auto rocketMoveTimer = Timer::create(0.5f);
+
+	//로켓 생성
+	for (int i = 0; i < 10; i++)
+	{
+		rockets[i] = Object::create("images3/rocket.png", game3scene, 1280, 0);
+	}
+
+	//하트 생성
+	for (int i = 0; i < 3; i++)
+	{
+		hearts[i] = Object::create("images3/filledheart.png", game3scene, 700 + 80 * i, 600);
+	}
+
+
+	// 변수 초기화 -> 변경되는 이후에 변경되는 모든 변수들은 다 초기화를 해준다.
+	initGame3(game3scene, rockets, hearts, findCon, findCrown, xspeed, heartCount, located, garden, crown, con, explode);
+	rocketInitPos(rocketPos);
+
+
 
 
 //인트로 제어함수
@@ -574,7 +611,10 @@ int main()
 		stage3story->enter();
 		return true;
 		});
-
+	sceneTimerEnd->setOnTimerCallback([&](TimerPtr sceneT)->bool {
+		end->enter();
+		return true;
+	});
 
 	// -------------------------------- scenechange mousecallback ---------------------
 	//stage1
@@ -616,6 +656,7 @@ int main()
 		sceneTimer3->start();
 		return true;
 		});
+
 	nextToGame3->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		game3intro->enter();
 		introMusic->stop();
@@ -623,11 +664,6 @@ int main()
 		return true;
 	});
 
-	//end
-	nextToEnd->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
-		end->enter();
-		return true;
-	});
 
 
 //GAME1 제어함수
@@ -872,35 +908,54 @@ int main()
 	});
 
 
+
+
 	// GAME 3 제어함수
-	game3startbtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
+	game3startBtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool {
 		game3scene->enter();
 		rocketMoveTimer->start();
 		return true;
 	});
 
+
+	game3restartBtn->setOnMouseCallback([&](ObjectPtr object, int x, int y, MouseAction action)->bool 
+	{
+
+		initGame3(game3scene, rockets, hearts, findCon, findCrown, xspeed, heartCount, located, garden, crown, con, explode);
+		rocketInitPos(rocketPos);
+
+		game3intro->enter();
+		loseMusic->stop();
+		game3Music->play();
+		return true;
+	});
+
 	rocketStopTimer->setOnTimerCallback([&](TimerPtr timer)->bool {
-		explode->hide();
+	
 		hearts[--heartCount]->setImage("images3/emptyheart.png");
+		explode->hide();
+		rocketStopTimer->set(0.1f);
 
 		// 게임종료
-
 		if (heartCount == 0)
 		{
 			rocketMoveTimer->stop();
+			keyMoveTimer->stop();
+			keyMoveTimer->stop();
+			 
+			if(findCrown == 1) crown->drop();
+			if (findCon == 1) con->drop();
 			game3Music->stop();
+
 			loseMusic->play();
 			lose3->enter();
+
 		}
-
-		rocketStopTimer->set(0.1f);
-
 		return true;
 	});
 
 
 
-	int located = 0;
 	keyMoveTimer->setOnTimerCallback([&](TimerPtr timer)->bool
 	{
 			switch (pressedkey)
@@ -939,32 +994,35 @@ int main()
 			}
 
 			// 왕관 위치
-			if (located == 5)
+			if (located == 5 && findCrown == 0)
 			{
-				find++;
+				findCrown = 1;
 				crown->pick();
-				map[now.y][now.x] = 1;
+				
 			}
 
 			// 뿔위치
-			if (located == 6)
+			if (located == 6 && findCon == 0)
 			{
-				find++;
+				findCon = 1;
 				con->pick();
-				map[now.y][now.x] = 1;
 			}
 
 			//도착 지점
 			if (located == 3)
 			{
-				cout << located << endl;
-				if (find == 2)
+				if (findCrown == 1 && findCon == 1)
 				{
 					rocketMoveTimer->stop();
-					win3->enter();
+					rocketStopTimer->stop();
+					keyMoveTimer->stop();
 					game3Music->stop();
+
+					win3->enter();
 					winMusic->play();
+					sceneTimerEnd->start();
 				}
+				return true;
 
 			}
 
@@ -975,7 +1033,8 @@ int main()
 
 			keyMoveTimer->set(0.1f);
 			keyMoveTimer->start();
-			return false;
+
+			return true;
 	});
 
 	game3scene->setOnKeyboardCallback([&](ScenePtr scene, int key, bool pressed)->bool
