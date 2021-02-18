@@ -926,7 +926,17 @@ int main()
 		});
 
 
-	game2scene->setOnKeyboardCallback([&](ScenePtr game2scene, int key, bool pressed)->bool {
+	game2scene->setOnKeyboardCallback([&](ScenePtr game2scene, KeyCode code, bool pressed)->bool {
+		/* translate new key code to old key value */
+		int key = 0;
+		switch (code) {
+		case KeyCode::KEY_LEFT_ARROW: key = LEFT; break;
+		case KeyCode::KEY_RIGHT_ARROW: key = RIGHT; break;
+		case KeyCode::KEY_UP_ARROW: key = UP; break;
+		case KeyCode::KEY_DOWN_ARROW: key = DOWN; break;
+		case KeyCode::KEY_SPACE: key = SPACEBAR; break;
+		}
+
 		game2BaseTimer->start();
 		key_press[key_index] = key;
 		timer->stop();
@@ -1115,8 +1125,18 @@ int main()
 			return true;
 		});
 
-	game3scene->setOnKeyboardCallback([&](ScenePtr scene, int key, bool pressed)->bool
+	game3scene->setOnKeyboardCallback([&](ScenePtr scene, KeyCode code, bool pressed)->bool
 		{
+			/* translate new key code to old key value */
+			int key = 0;
+			switch (code) {
+			case KeyCode::KEY_LEFT_ARROW: key = LEFT; break;
+			case KeyCode::KEY_RIGHT_ARROW: key = RIGHT; break;
+			case KeyCode::KEY_UP_ARROW: key = UP; break;
+			case KeyCode::KEY_DOWN_ARROW: key = DOWN; break;
+			case KeyCode::KEY_SPACE: key = SPACEBAR; break;
+			}
+
 			if (pressed)
 			{
 				pressedkey = key;
